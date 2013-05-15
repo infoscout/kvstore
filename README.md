@@ -9,7 +9,7 @@ App allows you to easily tag a django db object with key/value pairs.
 Setup a model with a kvstore by simply including the `register` method which appends a `kvstore` attribute to the model.
 
 	# models.py
-	from infoscout.apps import kvstore
+	import kvstore
 	
 	class Charity(models.Model):
 		...
@@ -55,7 +55,7 @@ Setup a model with a kvstore by simply including the `register` method which app
 To add a kvstore to modeladmin, just requires one line:
 
 	# model_admins.py
-	from infoscout.apps.kvstore.model_admin import TagInline
+	from kvstore.model_admin import TagInline
 	
 	class CharityModelAdmin(ModelAdmin):
 		inlines = [TagInline]

@@ -4,9 +4,9 @@ setup(name='kvstore',
     packages=find_packages(),  
     description = 'Django allows you to easily tag a django db object with key/value pairs.',
     url = 'http://github.com/infoscout/kvstore',
-    version = '0.1dev',    
+    #version = '0.1dev',    
     install_requires=[
-        'django>=1.4',
+        'django==1.4',
     ]
 )
 

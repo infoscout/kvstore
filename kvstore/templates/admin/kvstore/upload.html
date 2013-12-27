@@ -1,0 +1,27 @@
+{% extends "admin/base_site.html" %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% load humanize %}
+
+
+{% block content %}
+	<h1>Set KV Tags</h1>
+
+	<div>
+		Paste in the the following format to mass set KV tags:<br />
+		<b><i>object_id, key, value</i></b>
+		<br /><br />
+		
+	</div>
+
+	<form method="POST" action="">
+	
+		{{ form.as_p }}
+		
+		<input type="submit" value="Set Tags" />
+		
+		{% csrf_token %}
+	</form>
+
+{% endblock %}

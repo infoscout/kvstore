@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import patterns, url
-from isc_admin.admin_site import AdminApp
+from isc_admin import AdminApp
 from kvstore.admin.views import upload
 
 class KVStoreAdminApp(AdminApp):

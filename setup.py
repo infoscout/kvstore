@@ -8,7 +8,7 @@ setup(name='kvstore',
     url = 'http://github.com/infoscout/kvstore',
     version = current_version(),    
     install_requires=[
-        'django==1.4',
+        'django>=1.4',
     ]
 )
 

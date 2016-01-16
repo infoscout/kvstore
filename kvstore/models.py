@@ -27,12 +27,13 @@ class TagManager(models.Manager):
 
     def set(self, obj, key, value):
         """
-        Sets a key/value. If none exists, creates
-        record
+        Sets a key/value. If none exists, creates record
         """
         ctype = ContentType.objects.get_for_model(obj)
-        tag = self.get_or_create(content_type=ctype, object_id=obj.pk, 
-                                 key=key, defaults={'value': value})
+        tag, created = self.get_or_create(content_type=ctype, object_id=obj.pk, 
+                                          key=key, defaults={'value': value})
+        tag.value = value # If this tag already exists, get_or_create won't update the value
+        tag.save()
         return tag
 
     def delete(self, obj, key):

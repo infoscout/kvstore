@@ -22,6 +22,10 @@ class KVStoreTestCase(unittest.TestCase):
         # Add tags via dict 
         self.article.kvstore.set({'foo2': 'bar2'})
         self.assertTrue(self.article.kvstore.has('foo2'))
+
+        # Update existing tag
+        self.article.kvstore.set('foo', 'baz')
+        self.assertEqual('baz', self.article.kvstore.get('foo'))
         
         # Delete tag
         self.article.kvstore.delete('foo2')

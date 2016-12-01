@@ -7,7 +7,8 @@ from kvstore.admin.views import upload
 
 class KVStoreAdminApp(AdminApp):
     def get_urls(self):
-        urls = patterns('',
+        urls = patterns(
+            '',
             url(r'^kvstore/upload/?$', self.admin_view(upload), name="kvstore_upload"),
         )
         return urls

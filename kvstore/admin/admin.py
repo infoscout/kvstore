@@ -11,5 +11,3 @@ class KVStoreAdminApp(AdminApp):
             url(r'^kvstore/upload/?$', self.admin_view(upload), name="kvstore_upload"),
         )
         return urls
-
-#MTurkAdminApp.register(Worker, WorkerAdmin)

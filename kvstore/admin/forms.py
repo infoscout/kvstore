@@ -2,7 +2,6 @@ import re
 
 from django import forms
 from django.contrib.contenttypes.models import ContentType
-from django.forms import widgets
 
 
 class UploadForm(forms.Form):

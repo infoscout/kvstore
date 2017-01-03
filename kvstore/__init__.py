@@ -1,4 +1,4 @@
-from kvstore.managers import TagDescriptor
+from kvstore.accessor import TagDescriptor
 
 
 class AlreadyRegistered(Exception):

@@ -10,8 +10,10 @@ class TagManager(models.Manager):
         Returns dict of key/value tags for the object
         """
         ctype = ContentType.objects.get_for_model(obj)
-        list = self.values_list('key','value').filter(content_type=ctype, 
-                                                      object_id=obj.pk).all()
+        list = self.values_list('key', 'value').filter(
+            content_type=ctype,
+            object_id=obj.pk
+        ).all()
         return dict(list)
 
     def tag(self, obj, key):
@@ -30,9 +32,13 @@ class TagManager(models.Manager):
         Sets a key/value. If none exists, creates record
         """
         ctype = ContentType.objects.get_for_model(obj)
-        tag, created = self.get_or_create(content_type=ctype, object_id=obj.pk, 
-                                          key=key, defaults={'value': value})
-        tag.value = value # If this tag already exists, get_or_create won't update the value
+        tag, created = self.get_or_create(
+            content_type=ctype,
+            object_id=obj.pk,
+            key=key,
+            defaults={'value': value}
+        )
+        tag.value = value  # If this tag already exists, get_or_create won't update the value
         tag.save()
         return tag
 
@@ -54,11 +60,11 @@ class TagManager(models.Manager):
 class Tag(models.Model):
 
     content_type = models.ForeignKey(ContentType)
-    object_id    = models.PositiveIntegerField()
+    object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
-    key          = models.CharField(max_length=32, null=False, blank=False, db_index=True)
-    value        = models.TextField(null=False)
-    
+    key = models.CharField(max_length=32, null=False, blank=False, db_index=True)
+    value = models.TextField(null=False)
+
     objects = TagManager()
 
     class Meta:

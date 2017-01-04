@@ -1,6 +1,3 @@
-from kvstore.models import Tag
-
-
 class TagAccessor(object):
     """
     An abstraction layer for the kvstore attached
@@ -20,6 +17,7 @@ class TagAccessor(object):
             obj.kvstore.set('foo', 'bar')
             obj.kvstore.set({'foo': 'bar'})
         """
+        from kvstore.models import Tag
 
         if not isinstance(arg1, dict):
             dict_set = {arg1: arg2}
@@ -30,15 +28,19 @@ class TagAccessor(object):
             Tag.objects.set(self.obj, k, v)
 
     def delete(self, k):
+        from kvstore.models import Tag
         Tag.objects.delete(self.obj, k)
 
     def delete_all(self):
+        from kvstore.models import Tag
         Tag.objects.delete_all(self.obj)
 
     def get(self, k):
+        from kvstore.models import Tag
         return Tag.objects.tag(self.obj, k)
 
     def all(self):
+        from kvstore.models import Tag
         return Tag.objects.tags(self.obj)
 
     def has(self, k):

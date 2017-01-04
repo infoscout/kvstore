@@ -1,4 +1,4 @@
-from django.contrib.contenttypes.generic import GenericTabularInline
+from django.contrib.contenttypes.admin import GenericTabularInline
 from django.db import models
 from django.forms import widgets
 

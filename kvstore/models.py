@@ -7,7 +7,7 @@ from kvstore.managers import TagManager
 
 class Tag(models.Model):
 
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     key = models.CharField(max_length=32, null=False, blank=False, db_index=True)

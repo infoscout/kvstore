@@ -18,6 +18,6 @@ class RegisterTestCase(TestCase):
 
     def test_model_hasattr(self):
         """Attempts to add a kvstore attribute to model that already has one"""
-        
+
         setattr(ArticleWithKVstore, 'kvstore', TagDescriptor())
         self.assertRaises(AttributeError, kvstore.register, ArticleWithKVstore)

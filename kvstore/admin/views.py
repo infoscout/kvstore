@@ -26,7 +26,7 @@ def upload(request):
                 )
                 cnt += 1
 
-            messages.info(request, "%s tags set" % cnt)
+            messages.info(request, "%s tags set" % cnt, fail_silently=True)
     else:
         form = UploadForm()
 

@@ -9,11 +9,11 @@ class TagManager(models.Manager):
         Returns dict of key/value tags for the object
         """
         ctype = ContentType.objects.get_for_model(obj)
-        list = self.values_list('key', 'value').filter(
+        lst = self.values_list('key', 'value').filter(
             content_type=ctype,
             object_id=obj.pk
         ).all()
-        return dict(list)
+        return dict(lst)
 
     def tag(self, obj, key):
         """

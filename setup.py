@@ -1,7 +1,7 @@
 from setuptools import Command,find_packages, setup
 
 
-with open('VERSION', 'r') as f:
+with open('./VERSION', 'r') as f:
     version = f.read().strip()
 
 

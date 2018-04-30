@@ -1,5 +1,4 @@
-![CircleCI](https://circleci.com/gh/infoscout/kvstore.svg?style=svg)](https://circleci.com/gh/infoscout/kvstore)
-
+![CircleCI](https://circleci.com/gh/infoscout/kvstore.svg?style=svg)](https://circleci.com/gh/infoscout/kvstore/15)
 # Key-Value Store
 
 App allows you to easily tag a django db object with key/value pairs.

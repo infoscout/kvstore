@@ -17,7 +17,6 @@ class RegisterTestCase(KVStoreBaseTestCase):
 
     def test_model_hasattr(self):
         """Attempts to add a kvstore attribute to model that already has one"""
-        import pdb; pdb.set_trace()
-        setattr(Article, 'kvstore', TagDescriptor())
+        Article.kvstore = "coolbeans"
         with self.assertRaises(AttributeError):
             kvstore.register(Article)

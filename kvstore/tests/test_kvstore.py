@@ -1,8 +1,11 @@
+import six
+
+from django.contrib.contenttypes.models import ContentType
+
 import kvstore
 from kvstore.tests.models import Article
 from kvstore.tests.utils import KVStoreBaseTestCase
 from kvstore.models import Tag
-from django.contrib.contenttypes.models import ContentType
 
 
 class KVStoreTestCase(KVStoreBaseTestCase):
@@ -40,6 +43,6 @@ class KVStoreTestCase(KVStoreBaseTestCase):
         self.article.kvstore.delete_all()
         self.assertDictEqual(self.article.kvstore.all(), {})
 
-    def test_tag_unicode(self):
-        tag_unicode = unicode(self.tag)
-        self.assertEqual('session - cool - very', tag_unicode)
+    def test_tag_str(self):
+        tag_str = six.text_type(self.tag)
+        self.assertEqual('session - cool - very', tag_str)

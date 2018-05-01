@@ -1,5 +1,4 @@
 import kvstore
-
 from kvstore.tests.models import Article
 from kvstore.tests.utils import KVStoreBaseTestCase
 from kvstore.accessor import TagDescriptor

@@ -1,10 +1,9 @@
-import mock
-
 from django.test import TestCase, RequestFactory
 from django.conf.urls import url
 from kvstore.admin.views import upload
 from django.contrib.contenttypes.models import ContentType
 
+import mock
 
 class AdminTestCase(TestCase):
 

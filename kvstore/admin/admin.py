@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from isc_admin.isc_admin.admin_site import AdminApp
+from isc_admin.admin_site import AdminApp
 
 from kvstore.admin.views import upload
 

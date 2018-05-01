@@ -1,11 +1,13 @@
+import mock
+
 from django.test import TestCase, RequestFactory
 from django.conf.urls import url
 from kvstore.admin.views import upload
 from django.contrib.contenttypes.models import ContentType
-import mock
 
 
 class AdminTestCase(TestCase):
+
     def setUp(self):
         self.factory = RequestFactory()
 
@@ -18,11 +20,14 @@ class AdminTestCase(TestCase):
 
     @mock.patch('kvstore.admin.views.messages')
     def test_admin_post_request(self, mock_messages):
-        post_object = ContentType.objects.all()[0].id
-        post_input = '1, cool, very'
+        some_content_type = ContentType.objects.all()[0].id
+        some_input = '1, cool, very'
 
         # Create an instance of a POST request
-        request = self.factory.post('kvstore/upload/', {'object':post_object, 'input':post_input})
+        request = self.factory.post(
+            'kvstore/upload/',
+            {'object': some_content_type, 'input': some_input}
+        )
         # Test upload() as if it were deployed at /kvstore/upload/
         response = upload(request)
         self.assertEqual(response.status_code, 200)

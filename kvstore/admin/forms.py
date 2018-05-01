@@ -7,6 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 class UploadForm(forms.Form):
 
     class CTypeChoiceField(forms.ModelChoiceField):
+        
         def label_from_instance(self, obj):
             return "%s - %s" % (obj.app_label, obj.model)
 

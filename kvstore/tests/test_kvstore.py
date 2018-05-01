@@ -8,13 +8,15 @@ from django.contrib.contenttypes.models import ContentType
 class KVStoreTestCase(KVStoreBaseTestCase):
 
     def setUp(self):
-        # super(KVStoreTestCase, self).setUp()
         kvstore.register(Article)
         self.article = Article.objects.create(title="Test")
-        self.content_obj = ContentType.objects.filter(app_label="sessions")[0]
-        self.tag = Tag.objects.create(content_object=self.content_obj,
-                                      object_id=1, key="cool", value="very")
-
+        self.content_type = ContentType.objects.filter(app_label="sessions")[0]
+        self.tag = Tag.objects.create(
+            content_object=self.content_type,
+            object_id=1,
+            key="cool",
+            value="very"
+        )
 
     def test_kvstore(self):
         # Add tag
@@ -39,5 +41,5 @@ class KVStoreTestCase(KVStoreBaseTestCase):
         self.assertDictEqual(self.article.kvstore.all(), {})
 
     def test_tag_unicode(self):
-        tag_unicode = self.tag.__unicode__()
+        tag_unicode = unicode(self.tag)
         self.assertEqual('session - cool - very', tag_unicode)

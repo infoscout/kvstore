@@ -1,14 +1,11 @@
 import kvstore
 
-from kvstore.tests.models import Article, ArticleWithKVstore
+from kvstore.tests.models import Article
 from kvstore.tests.utils import KVStoreBaseTestCase
 from kvstore.accessor import TagDescriptor
 
 
 class RegisterTestCase(KVStoreBaseTestCase):
-
-    def setUp(self):
-        pass
 
     def test_register_multiple_models(self):
         """Attempts to register the same model multiple times"""

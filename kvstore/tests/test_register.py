@@ -1,10 +1,11 @@
 import kvstore
 
-from django.test import TestCase
 from kvstore.tests.models import Article, ArticleWithKVstore
+from kvstore.tests.utils import KVStoreBaseTestCase
 from kvstore.accessor import TagDescriptor
 
-class RegisterTestCase(TestCase):
+
+class RegisterTestCase(KVStoreBaseTestCase):
 
     def setUp(self):
         pass
@@ -18,6 +19,5 @@ class RegisterTestCase(TestCase):
 
     def test_model_hasattr(self):
         """Attempts to add a kvstore attribute to model that already has one"""
-
-        setattr(ArticleWithKVstore, 'kvstore', TagDescriptor())
-        self.assertRaises(AttributeError, kvstore.register, ArticleWithKVstore)
+        setattr(Article, 'kvstore', TagDescriptor())
+        self.assertRaises(AttributeError, kvstore.register, Article)

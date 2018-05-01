@@ -4,6 +4,7 @@ from kvstore.admin.views import upload
 from django.contrib.contenttypes.models import ContentType
 import mock
 
+
 class AdminTestCase(TestCase):
     def setUp(self):
         self.factory = RequestFactory()

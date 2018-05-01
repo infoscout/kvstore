@@ -1,11 +1,11 @@
-from django.test import TestCase
-
 import kvstore
 from kvstore.tests.models import Article
+from kvstore.tests.utils import KVStoreBaseTestCase
 from kvstore.models import Tag
 from django.contrib.contenttypes.models import ContentType
 
-class KVStoreTestCase(TestCase):
+
+class KVStoreTestCase(KVStoreBaseTestCase):
 
     def setUp(self):
         # super(KVStoreTestCase, self).setUp()

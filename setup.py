@@ -1,8 +1,69 @@
-from setuptools import find_packages, setup
+from setuptools import Command, find_packages, setup
 
 
 with open('VERSION', 'r') as f:
     version = f.read().strip()
+
+
+class TestCommand(Command):
+
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        import django
+        from django.conf import settings
+        from django.core.management import call_command
+
+        settings.configure(
+            DATABASES={
+                'default': {
+                    'NAME': ':memory:',
+                    'ENGINE': 'django.db.backends.sqlite3',
+                },
+            },
+            # DEFAULT_INDEX_TABLESPACE='',
+            INSTALLED_APPS=(
+                'django.contrib.admin',
+                'django.contrib.auth',
+                'django.contrib.contenttypes',
+                'django.contrib.messages',
+                'django.contrib.sessions',
+                'django.contrib.humanize',
+                'kvstore',
+                'kvstore.tests',
+            ),
+            TEMPLATES=[
+                {
+                    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+                    'APP_DIRS': True,
+                    'OPTIONS': {
+                        'context_processors': [
+                            'django.contrib.auth.context_processors.auth',
+                            'django.contrib.messages.context_processors.messages',
+                        ],
+                    },
+                },
+            ],
+            MIDDLEWARE=(
+                'django.middleware.common.CommonMiddleware',
+                'django.contrib.sessions.middleware.SessionMiddleware',
+                'django.contrib.auth.middleware.AuthenticationMiddleware',
+                'django.contrib.messages.middleware.MessageMiddleware',
+            ),
+            MIDDLEWARE_CLASSES=(
+                'django.contrib.sessions.middleware.SessionMiddleware',
+                'django.contrib.messages.middleware.MessageMiddleware',
+            ),  # Django < 1.10
+            ROOT_URLCONF='kvstore.tests.urls',
+        )
+        django.setup()
+        call_command('test', 'kvstore')
 
 
 setup(
@@ -14,5 +75,9 @@ setup(
     version=version,
     install_requires=[
         'Django>=1.8',
-    ]
+    ],
+    tests_require=[
+        'mock',
+    ],
+    cmdclass={'test': TestCommand}
 )

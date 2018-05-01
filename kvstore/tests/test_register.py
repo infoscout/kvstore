@@ -13,8 +13,10 @@ class RegisterTestCase(KVStoreBaseTestCase):
             kvstore.register(Article)
 
         self.assertEqual(1, len(kvstore.registry))
+        self.assertIn(Article, kvstore.registry)
 
     def test_model_hasattr(self):
         """Attempts to add a kvstore attribute to model that already has one"""
         setattr(Article, 'kvstore', TagDescriptor())
-        self.assertRaises(AttributeError, kvstore.register, Article)
+        with self.assertRaises(AttributeError):
+            kvstore.register(Article)

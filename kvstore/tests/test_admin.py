@@ -2,6 +2,7 @@ from django.test import TestCase, RequestFactory
 from django.conf.urls import url
 from kvstore.admin.views import upload
 from django.contrib.contenttypes.models import ContentType
+import mock
 
 class AdminTestCase(TestCase):
     def setUp(self):
@@ -14,7 +15,8 @@ class AdminTestCase(TestCase):
         response = upload(request)
         self.assertEqual(response.status_code, 200)
 
-    def test_admin_post_request(self):
+    @mock.patch('kvstore.admin.views.messages')
+    def test_admin_post_request(self, mock_messages):
         post_object = ContentType.objects.all()[0].id
         post_input = '1, cool, very'
 

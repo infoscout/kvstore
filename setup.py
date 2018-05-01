@@ -1,4 +1,4 @@
-from setuptools import Command,find_packages, setup
+from setuptools import Command, find_packages, setup
 
 
 with open('VERSION', 'r') as f:
@@ -37,7 +37,6 @@ class TestCommand(Command):
                 'django.contrib.humanize',
                 'kvstore',
                 'kvstore.tests',
-
             ),
             TEMPLATES=[
                 {
@@ -57,8 +56,10 @@ class TestCommand(Command):
                 'django.contrib.auth.middleware.AuthenticationMiddleware',
                 'django.contrib.messages.middleware.MessageMiddleware',
             ),
-            # MIDDLEWARE_CLASSES=(
-            # ),  # Django < 1.10
+            MIDDLEWARE_CLASSES=(
+                'django.contrib.sessions.middleware.SessionMiddleware',
+                'django.contrib.messages.middleware.MessageMiddleware',
+            ),  # Django < 1.10
             ROOT_URLCONF='kvstore.tests.urls',
             # AUTHENTICATION_BACKENDS=['isc_saml.auth_backend.ISCSAMLBackend']
         )

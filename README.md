@@ -71,5 +71,3 @@ Note you can directly query the tag model as well. For example, if you want to g
 ## Future enhancements
 
 Built-in support for JSON as a value
-
-(testing)

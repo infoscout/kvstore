@@ -1,4 +1,5 @@
 # Key-Value Store
+
 [![CircleCI](https://circleci.com/gh/infoscout/kvstore/tree/master.svg?style=svg)](https://circleci.com/gh/infoscout/kvstore/tree/master)
 [![codecov](https://codecov.io/gh/infoscout/kvstore/branch/master/graph/badge.svg)](https://codecov.io/gh/infoscout/kvstore)
 

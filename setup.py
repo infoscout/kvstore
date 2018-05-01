@@ -61,7 +61,6 @@ class TestCommand(Command):
                 'django.contrib.messages.middleware.MessageMiddleware',
             ),  # Django < 1.10
             ROOT_URLCONF='kvstore.tests.urls',
-            # AUTHENTICATION_BACKENDS=['isc_saml.auth_backend.ISCSAMLBackend']
         )
         django.setup()
         call_command('test', 'kvstore')

@@ -6,6 +6,7 @@ import mock
 
 from kvstore.admin.views import upload
 
+
 class AdminTestCase(TestCase):
 
     def setUp(self):

@@ -4,7 +4,6 @@ from kvstore.tests.models import Article
 from kvstore.tests.utils import KVStoreBaseTestCase
 
 
-
 class RegisterTestCase(KVStoreBaseTestCase):
 
     def test_register_multiple_models(self):

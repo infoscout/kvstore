@@ -21,7 +21,7 @@ jobs:
           command: |
             source venv/bin/activate
             echo $DJANGO_VERSIONS | tr ";" "\n" | xargs -L 1 -I % tox -e dj%
-       - run:
+      - run:
           name: Install linters and custom checkers
           command: |
             source venv/bin/activate

@@ -11,7 +11,9 @@ class UploadForm(forms.Form):
         def label_from_instance(self, obj):
             return "%s - %s" % (obj.app_label, obj.model)
 
-    object = CTypeChoiceField(queryset=ContentType.objects.order_by("app_label", "model").all())
+    object = CTypeChoiceField(
+        queryset=ContentType.objects.order_by("app_label", "model").all()
+    )
     input = forms.CharField(widget=forms.Textarea(attrs={'rows': 10}))
 
     def clean_input(self):

@@ -41,7 +41,8 @@ class TagManager(models.Manager):
             key=key,
             defaults={'value': value}
         )
-        tag.value = value  # If this tag already exists, get_or_create won't update the value
+        # If this tag already exists, get_or_create won't update the value
+        tag.value = value
         tag.save()
         return tag
 

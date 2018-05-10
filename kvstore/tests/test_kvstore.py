@@ -8,7 +8,6 @@ from kvstore.tests.models import Article
 from kvstore.tests.utils import KVStoreBaseTestCase
 
 
-
 class KVStoreTestCase(KVStoreBaseTestCase):
 
     def setUp(self):

@@ -1,11 +1,10 @@
 from django.conf.urls import url
-
-from isc_admin.admin_site import AdminApp
+from django.contrib import admin
 
 from kvstore.admin.views import upload
 
 
-class KVStoreAdminApp(AdminApp):
+class KVStoreAdminApp(admin.ModleAdmin):
 
     def get_urls(self):
         return [

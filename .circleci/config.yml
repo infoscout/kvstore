@@ -47,15 +47,15 @@ jobs:
       - image: circleci/python:3.6
     environment:
       - DJANGO_VERSIONS: "111;20"
-      
+
 workflows:
   version: 2
   test:
     jobs:
-      - link-checks
+      - lint-checks
       - test-py27:
-        requires:
-          - lint-checks
+          requires:
+            - lint-checks
       - test-py36:
-        requires:
-          - test-py27
+          requires:
+            - test-py27

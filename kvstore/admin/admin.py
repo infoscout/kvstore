@@ -7,7 +7,7 @@ from django.contrib import admin
 from kvstore.admin.views import upload
 
 
-class KVStoreAdminApp(admin.ModleAdmin):
+class KVStoreAdminApp(admin.ModelAdmin):
 
     def get_urls(self):
         return [

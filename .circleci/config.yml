@@ -1,5 +1,4 @@
 version: 2
-
 jobs:
   lint-checks:
     docker:
@@ -58,8 +57,8 @@ workflows:
     jobs:
       - link-checks
       - test-py27
-        requires:
-          - lint-checks
+          requires:
+            - lint-checks
       - test-py36
-        requires:
-          - test-py27
+          requires:
+            - test-py27

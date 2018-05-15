@@ -23,9 +23,11 @@ def register(model, descriptor_attr='kvstore'):
 
     if hasattr(model, descriptor_attr):
         raise AttributeError(
-            "'%s' already has an attribute '%s'. You must provide a custom \
-            tag_descriptor_attr to register."
-            % (model._meta.object_name, descriptor_attr,)
+            (
+                "'{obj_name}' already has an attribute '{att_name}'."
+                "You must provide a custom tag_descriptor_attr to register."
+            ).format(obj_name=model._meta.object, att_name=descriptor_attr)
+
         )
 
     # Add tag descriptor

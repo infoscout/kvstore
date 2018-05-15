@@ -42,12 +42,12 @@ class TestCommand(Command):
             ),
             TEMPLATES=[
                 {
-                    'BACKEND': 'django.template.backends.django.DjangoTemplates', # noqa E501
+                    'BACKEND': 'django.template.backends.django.DjangoTemplates',  # noqa: E501
                     'APP_DIRS': True,
                     'OPTIONS': {
                         'context_processors': [
                             'django.contrib.auth.context_processors.auth',
-                            'django.contrib.messages.context_processors.messages', # noqa E501
+                            'django.contrib.messages.context_processors.messages',  # noqa: E501
                         ],
                     },
                 },
@@ -72,8 +72,9 @@ setup(
     name='kvstore',
     packages=find_packages(),
     include_package_data=True,
-    description='Django allows you to easily tag a django db object with \
-                 key/value pairs.',
+    description=("Django allows you to easily tag a django db object"
+     "with key/value pairs."
+    ),
     url='http://github.com/infoscout/kvstore',
     version=version,
     install_requires=[

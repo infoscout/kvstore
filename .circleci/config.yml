@@ -53,9 +53,9 @@ workflows:
   test:
     jobs:
       - link-checks
-      - test-py27
+      - test-py27:
         requires:
           - lint-checks
-      - test-py36
+      - test-py36:
         requires:
           - test-py27

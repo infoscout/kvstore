@@ -3,9 +3,10 @@ from __future__ import unicode_literals
 
 from django.contrib.contenttypes.models import ContentType
 
+import kvstore
+
 import six
 
-import kvstore
 from kvstore.models import Tag
 from kvstore.tests.models import Article
 from kvstore.tests.utils import KVStoreBaseTestCase

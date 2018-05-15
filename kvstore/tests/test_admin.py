@@ -1,18 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib import admin
 from django.contrib.admin.sites import AdminSite
 from django.contrib.contenttypes.models import ContentType
-from django.conf.urls import url
-from django.test import TestCase, RequestFactory
-
-
-import mock
+from django.test import RequestFactory, TestCase
 
 from kvstore.admin.admin import KVStoreAdminApp
 from kvstore.admin.views import upload
 from kvstore.tests.models import Article
+
+import mock
 
 
 class AdminTestCase(TestCase):

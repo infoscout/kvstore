@@ -6,6 +6,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Setup a virtualenv
+          command: virtualenv venv
+      - run:
           name: Install linters and custom checkers
           command: |
             source venv/bin/activate

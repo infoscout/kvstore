@@ -1,26 +1,30 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.contrib import admin
+from django.contrib.admin.sites import AdminSite
 from django.contrib.contenttypes.models import ContentType
 from django.conf.urls import url
 from django.test import TestCase, RequestFactory
+
 
 import mock
 
 from kvstore.admin.admin import KVStoreAdminApp
 from kvstore.admin.views import upload
+from kvstore.tests.models import Article
 
 
 class AdminTestCase(TestCase):
 
     def setUp(self):
         self.factory = RequestFactory()
+        self.site = AdminSite()
 
     def test_admin_get_urls(self):
-        admin_app = KVStoreAdminApp()
+        admin_app = KVStoreAdminApp(Article, self.site)
         urls = admin_app.get_urls()
         self.assertEqual(len(urls), 1)
-        self.assertId(type(urls[0]), url)
 
     def test_admin_get_request(self):
         # Create an instance of a GET request

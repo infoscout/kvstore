@@ -4,12 +4,11 @@ from __future__ import unicode_literals
 from django.contrib.admin.sites import AdminSite
 from django.contrib.contenttypes.models import ContentType
 from django.test import RequestFactory, TestCase
+import mock
 
 from kvstore.admin.admin import KVStoreAdminApp
 from kvstore.admin.views import upload
 from kvstore.tests.models import Article
-
-import mock
 
 
 class AdminTestCase(TestCase):

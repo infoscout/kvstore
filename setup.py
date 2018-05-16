@@ -84,5 +84,5 @@ setup(
     tests_require=[
         'mock',
     ],
-    cmdclass={'test': TestCommand}
+    cmdclass={'test': TestCommand},
 )

@@ -16,7 +16,10 @@ class Tag(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     key = models.CharField(
-        max_length=32, null=False, blank=False, db_index=True
+        max_length=32,
+        null=False,
+        blank=False,
+        db_index=True,
     )
     value = models.TextField(null=False)
 
@@ -24,7 +27,7 @@ class Tag(models.Model):
 
     class Meta:
         # Enforce unique tag association per object
-        unique_together = (('content_type', 'object_id', 'key'),)
+        unique_together = (('content_type', 'object_id', 'key'))
 
     def __str__(self):
         return u'%s - %s - %s' % (self.content_object, self.key, self.value)

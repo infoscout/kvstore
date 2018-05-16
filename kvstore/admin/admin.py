@@ -14,6 +14,6 @@ class KVStoreAdminApp(admin.ModelAdmin):
             url(
                 r'^kvstore/upload/?$',
                 self.admin_site.admin_view(upload),
-                name="kvstore_upload"
+                name="kvstore_upload",
             ),
         ]

@@ -19,7 +19,8 @@ class Migration(migrations.Migration):
                 ('object_id', models.PositiveIntegerField()),
                 ('key', models.CharField(max_length=32, db_index=True)),
                 ('value', models.TextField()),
-                ('content_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType')),
+                ('content_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType'))
+            ],
             options={
             },
             bases=(models.Model,),

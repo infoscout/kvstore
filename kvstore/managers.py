@@ -14,7 +14,7 @@ class TagManager(models.Manager):
         ctype = ContentType.objects.get_for_model(obj)
         lst = self.values_list('key', 'value').filter(
             content_type=ctype,
-            object_id=obj.pk,
+            object_id=obj.pk
         ).all()
         return dict(lst)
 
@@ -27,7 +27,7 @@ class TagManager(models.Manager):
             tag = self.filter(
                 content_type=ctype,
                 object_id=obj.pk,
-                key=key,
+                key=key
             ).get()
         except self.model.DoesNotExist:
             return None
@@ -42,7 +42,7 @@ class TagManager(models.Manager):
             content_type=ctype,
             object_id=obj.pk,
             key=key,
-            defaults={'value': value},
+            defaults={'value': value}
         )
         # If this tag already exists, get_or_create won't update the value
         tag.value = value

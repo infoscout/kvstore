@@ -20,7 +20,7 @@ class KVStoreTestCase(KVStoreBaseTestCase):
             content_object=self.content_type,
             object_id=1,
             key="cool",
-            value="very",
+            value="very"
         )
 
     def test_kvstore(self):

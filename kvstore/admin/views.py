@@ -25,7 +25,7 @@ def upload(request):
                     content_type=ctype,
                     object_id=obj_id,
                     key=k,
-                    defaults={'value': v},
+                    defaults={'value': v}
                 )
                 cnt += 1
 

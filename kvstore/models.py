@@ -27,7 +27,7 @@ class Tag(models.Model):
 
     class Meta:
         # Enforce unique tag association per object
-        unique_together = (('content_type', 'object_id', 'key'))
+        unique_together = (('content_type', 'object_id', 'key',),)
 
     def __str__(self):
         return u'%s - %s - %s' % (self.content_object, self.key, self.value)

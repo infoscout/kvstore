@@ -37,7 +37,7 @@ class AdminTestCase(TestCase):
         # Create an instance of a POST request
         request = self.factory.post(
             'kvstore/upload/',
-            {'object': some_content_type, 'input': some_input},
+            {'object': some_content_type, 'input': some_input}
         )
         # Test upload() as if it were deployed at /kvstore/upload/
         response = upload(request)

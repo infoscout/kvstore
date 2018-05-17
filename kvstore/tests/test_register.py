@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import kvstore
-from kvstore.accessor import TagDescriptor
 from kvstore.tests.models import Article
 from kvstore.tests.utils import KVStoreBaseTestCase
 

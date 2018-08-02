@@ -2,12 +2,14 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
+from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render
 
 from kvstore.admin.forms import UploadForm
 from kvstore.models import Tag
 
 
+@permission_required(('kvstore.add_tag, kvstore.change_tag',))
 def upload(request):
     """
     Mass set kvtags

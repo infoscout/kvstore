@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib.admin.sites import AdminSite
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.test import RequestFactory, TestCase
 import mock
@@ -12,6 +13,12 @@ from kvstore.tests.models import Article
 
 
 class AdminTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_user(username='admin')
+        cls.user.is_superuser = True
+        cls.user.save()
 
     def setUp(self):
         self.factory = RequestFactory()
@@ -25,6 +32,7 @@ class AdminTestCase(TestCase):
     def test_admin_get_request(self):
         # Create an instance of a GET request
         request = self.factory.get('kvstore/upload/')
+        request.user = self.user
         # Test upload() as if it were deployed at /kvstore/upload/
         response = upload(request)
         self.assertEqual(response.status_code, 200)
@@ -39,6 +47,7 @@ class AdminTestCase(TestCase):
             'kvstore/upload/',
             {'object': some_content_type, 'input': some_input}
         )
+        request.user = self.user
         # Test upload() as if it were deployed at /kvstore/upload/
         response = upload(request)
         self.assertEqual(response.status_code, 200)

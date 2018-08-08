@@ -9,7 +9,7 @@ from kvstore.admin.forms import UploadForm
 from kvstore.models import Tag
 
 
-@permission_required(('kvstore.add_tag, kvstore.change_tag',))
+@permission_required(('kvstore.add_tag', 'kvstore.change_tag',))
 def upload(request):
     """
     Mass set kvtags

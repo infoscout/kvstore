@@ -5,7 +5,10 @@ from django.contrib.admin.sites import AdminSite
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.test import RequestFactory, TestCase
-import mock
+try:
+    import mock
+except ImportError:
+    from unittest import mock
 
 from kvstore.admin.admin import KVStoreAdminApp
 from kvstore.admin.views import upload

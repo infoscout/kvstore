@@ -7,6 +7,12 @@ App allows you to easily tag a django db object with key/value pairs.
 
 ## Implementation
 
+### Installation
+
+1. Install package into Django runtime environment
+1. Add `django.contrib.humanize` and `kvstore` to the list of `INSTALLED_APPS` in `settings.py` of your Django project
+1. `python manage.py migrate`
+
 ### Setting up a django model with a kvstore
 
 Setup a model with a kvstore by simply including the `register` method which appends a `kvstore` attribute to the model.
@@ -25,7 +31,7 @@ kvstore.register(Charity)
 
 ```python
 charity = Charity.objects.get(pk=123)
-charity.kvstore.set('foo','bar')
+charity.kvstore.set('foo', 'bar')
 
 # Or set multiple key/values with a dictionary
 charity.kvstore.set({'foo': 'bar'})
@@ -51,15 +57,15 @@ exists = charity.kvstore.has('foo')
 charity.kvstore.delete('foo')
 
 # Delete multiple tags
-charity.kvstore.delete(['foo','foo2'])
+charity.kvstore.delete(['foo', 'foo2'])
 
 # Delete all
 charity.kvstore.delete_all()
 ```
 
-### Adding kvstore to admin
+### Adding kvstore to ModelAdmin
 
-To add a kvstore to modeladmin, just requires one line:
+To add a kvstore to `ModelAdmin`, just requires one line:
 
 ```python
 # model_admins.py
@@ -69,6 +75,18 @@ class CharityModelAdmin(ModelAdmin):
   inlines = [TagInline]
   ...
 ```
+
+### Adding Custom Tags View to Django Admin
+
+```python
+# admin.py
+from kvstore.admin.admin import KVStoreAdminApp
+from kvstore.models import Tag
+
+admin.site.register(Tag, KVStoreAdminApp)
+```
+
+Custom view is available at `/admin/kvstore/tag/kvstore/upload`
 
 ### Other queries
 

@@ -20,7 +20,7 @@ def upload(request):
             ctype = form.cleaned_data['object']
 
             # Process here
-            cnt = 0
+            count = 0
             for obj_id, k, v in form.cleaned_data['input']:
 
                 tag, created = Tag.objects.update_or_create(
@@ -29,9 +29,9 @@ def upload(request):
                     key=k,
                     defaults={'value': v}
                 )
-                cnt += 1
+                count += 1
 
-            messages.info(request, "%s tags set" % cnt)
+            messages.info(request, "%s tags set" % count)
     else:
         form = UploadForm()
 

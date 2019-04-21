@@ -65,7 +65,7 @@ class AdminTestCase(TestCase):
         self.assertEqual(tag.value, "very")
 
     @mock.patch("kvstore.admin.views.messages")
-    def test_admin_post_request_update_existing_entry(self, mock_messages):
+    def test_admin_post_request_update_existing_key(self, mock_messages):
         # Arrange
         some_content_type = ContentType.objects.all()[0].id
         some_input = "1, cool, very"
@@ -74,9 +74,9 @@ class AdminTestCase(TestCase):
         request.user = self.user
         response = upload(request)
 
-        # Act (update key)
-        updated_key = "extremely"
-        some_input = "1, cool, {0}".format(updated_key)
+        # Act (update value for existing key)
+        updated_value = "extremely"
+        some_input = "1, cool, {0}".format(updated_value)
         post_json = {"object": some_content_type, "input": some_input}
         request = self.factory.post("kvstore/upload/", post_json)
         request.user = self.user
@@ -91,4 +91,4 @@ class AdminTestCase(TestCase):
         tag = tags_created[0]
         self.assertEqual(tag.content_type_id, 1)
         self.assertEqual(tag.key, "cool")
-        self.assertEqual(tag.value, updated_key)
+        self.assertEqual(tag.value, updated_value)

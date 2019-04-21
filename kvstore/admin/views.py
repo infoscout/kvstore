@@ -23,7 +23,7 @@ def upload(request):
             cnt = 0
             for obj_id, k, v in form.cleaned_data['input']:
 
-                tag, created = Tag.objects.get_or_create(
+                tag, created = Tag.objects.update_or_create(
                     content_type=ctype,
                     object_id=obj_id,
                     key=k,

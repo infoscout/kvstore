@@ -14,7 +14,7 @@
     <br /><br />
   </div>
 
-  <form method="POST" action="/admin/kvstore/tag/kvstore/upload_csv" enctype="multipart/form-data">
+  <form method="POST" action="{% url 'admin:kvstore_upload_csv' %}" enctype="multipart/form-data">
     {% csrf_token %}
     {{ csv_upload_form.as_p }}
 
@@ -30,7 +30,7 @@
     <br /><br />
   </div>
 
-  <form method="POST" action="/admin/kvstore/tag/kvstore/upload_bulk">
+  <form method="POST" action="{% url 'admin:kvstore_upload_bulk' %}">
     {% csrf_token %}
     {{ bulk_entry_form.as_p }}
 

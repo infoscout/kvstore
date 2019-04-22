@@ -12,7 +12,10 @@ from django.contrib.admin.sites import AdminSite
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.test import Client, RequestFactory, TestCase
-from django.urls import reverse
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 from kvstore.admin.admin import KVStoreAdminApp
 from kvstore.admin.views import upload, upload_bulk

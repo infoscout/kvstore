@@ -11,17 +11,24 @@ from kvstore.models import Tag
 
 @permission_required(('kvstore.add_tag', 'kvstore.change_tag',))
 def upload(request):
+    bulk_entry_form = UploadForm()
+    context = {'bulk_entry_form': bulk_entry_form}
+    return render(request, 'admin/kvstore/upload.html', context)
+
+
+@permission_required(('kvstore.add_tag', 'kvstore.change_tag',))
+def upload_bulk(request):
     """
     Mass set kvtags
     """
     if request.method == 'POST':
-        form = UploadForm(request.POST)
-        if form.is_valid():
-            ctype = form.cleaned_data['object']
+        bulk_entry_form = UploadForm(request.POST)
+        if bulk_entry_form.is_valid():
+            ctype = bulk_entry_form.cleaned_data['object']
 
             # Process here
             count = 0
-            for obj_id, k, v in form.cleaned_data['input']:
+            for obj_id, k, v in bulk_entry_form.cleaned_data['input']:
 
                 tag, created = Tag.objects.update_or_create(
                     content_type=ctype,
@@ -33,7 +40,6 @@ def upload(request):
 
             messages.info(request, "%s tags set" % count)
     else:
-        form = UploadForm()
-
-    context = {'form': form}
+        bulk_entry_form = UploadForm()
+    context = {'bulk_entry_form': bulk_entry_form}
     return render(request, 'admin/kvstore/upload.html', context)

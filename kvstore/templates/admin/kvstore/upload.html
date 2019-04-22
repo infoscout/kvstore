@@ -13,9 +13,9 @@
     <br /><br />
   </div>
 
-  <form method="POST" action="">
+  <form method="POST" action="/admin/kvstore/tag/kvstore/upload_bulk">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ bulk_entry_form.as_p }}
 
     <input type="submit" value="Set Tags" />
   </form>

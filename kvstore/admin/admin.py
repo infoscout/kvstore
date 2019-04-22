@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.conf.urls import url
 from django.contrib import admin
 
-from kvstore.admin.views import upload
+from kvstore.admin.views import upload, upload_bulk
 
 
 class KVStoreAdminApp(admin.ModelAdmin):
@@ -14,6 +14,11 @@ class KVStoreAdminApp(admin.ModelAdmin):
             url(
                 r'^kvstore/upload/?$',
                 self.admin_site.admin_view(upload),
-                name="kvstore_upload"
+                name="kvstore_upload_ui"
+            ),
+            url(
+                r'^kvstore/upload_bulk/?$',
+                self.admin_site.admin_view(upload_bulk),
+                name="kvstore_upload_bulk"
             )
         ]

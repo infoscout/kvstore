@@ -12,7 +12,7 @@ except ImportError:
     from unittest import mock
 
 from kvstore.admin.admin import KVStoreAdminApp
-from kvstore.admin.views import upload
+from kvstore.admin.views import upload, upload_bulk
 from kvstore.models import Tag
 from kvstore.tests.models import Article
 
@@ -31,7 +31,7 @@ class AdminTestCase(TestCase):
     def test_admin_get_urls(self):
         admin_app = KVStoreAdminApp(Article, self.site)
         urls = admin_app.get_urls()
-        self.assertEqual(len(urls), 1)
+        self.assertEqual(len(urls), 2)
 
     def test_admin_get_request(self):
         # Create an instance of a GET request
@@ -47,11 +47,11 @@ class AdminTestCase(TestCase):
         some_content_type = ContentType.objects.all()[0].id
         some_input = "1, cool, very"
         post_json = {"object": some_content_type, "input": some_input}
-        request = self.factory.post("kvstore/upload/", post_json)
+        request = self.factory.post("kvstore/upload_bulk/", post_json)
         request.user = self.user
 
         # Act
-        response = upload(request)
+        response = upload_bulk(request)
 
         # Assert
         self.assertEqual(response.status_code, 200)
@@ -70,17 +70,17 @@ class AdminTestCase(TestCase):
         some_content_type = ContentType.objects.all()[0].id
         some_input = "1, cool, very"
         post_json = {"object": some_content_type, "input": some_input}
-        request = self.factory.post("kvstore/upload/", post_json)
+        request = self.factory.post("kvstore/upload_bulk/", post_json)
         request.user = self.user
-        response = upload(request)
+        response = upload_bulk(request)
 
         # Act (update value for existing key)
         updated_value = "extremely"
         some_input = "1, cool, {0}".format(updated_value)
         post_json = {"object": some_content_type, "input": some_input}
-        request = self.factory.post("kvstore/upload/", post_json)
+        request = self.factory.post("kvstore/upload_bulk/", post_json)
         request.user = self.user
-        response = upload(request)
+        response = upload_bulk(request)
 
         # Assert
         self.assertEqual(response.status_code, 200)

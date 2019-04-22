@@ -104,6 +104,16 @@ Built-in support for JSON as a value
 
 ## Contributing
 
+### Note on Testing Django Packages
+
+- testing a Django package is like testing middleware, we have to set up a project instance we can import this package into
+- `setup.py` contains Django project settings
+  - `INSTALLED_APPS` has an entry for `kvstore.tests`
+- `tests` folder contains Django project files required for testing:
+  - `admin.py`
+  - `models.py`
+  - `urls.py`
+
 ### Setting up Development Environment
 
 1. Create and activate virtual environment

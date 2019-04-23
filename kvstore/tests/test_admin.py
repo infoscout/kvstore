@@ -23,7 +23,7 @@ from kvstore.models import Tag
 from kvstore.tests.models import Article
 
 
-class AdminTestCase(TestCase):
+class CustomAdminViewTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create_user(username="admin")
@@ -39,20 +39,55 @@ class AdminTestCase(TestCase):
         urls = admin_app.get_urls()
         self.assertEqual(len(urls), 3)
 
-    def test_admin_get_request(self):
-        # Create an instance of a GET request
+    def test_admin_get_custom_admin_view(self):
         request = self.factory.get("kvstore/upload/")
         request.user = self.user
-        # Test upload() as if it were deployed at /kvstore/upload/
         response = upload(request)
         self.assertEqual(response.status_code, 200)
 
+
+class AdminBulkUploadTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_user(username="admin")
+        cls.user.is_superuser = True
+        cls.user.save()
+
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.site = AdminSite()
+
     @mock.patch("kvstore.admin.views.messages")
-    def test_admin_bulk_upload(self, mock_messages):
+    def test_bulk_upload_does_not_allow_overwrite_fails(self, mock_messages):
         # Arrange
         some_content_type = ContentType.objects.all()[0].id
         some_input = "1, cool, very"
-        post_json = {"object": some_content_type, "input": some_input}
+        post_json = {
+            "object": some_content_type,
+            "allow_overwrite": False,  # required field is unchecked
+            "input": some_input
+        }
+        request = self.factory.post("kvstore/upload_bulk/", post_json)
+        request.user = self.user
+
+        # Act
+        response = upload_bulk(request)
+
+        # Assert
+        self.assertEqual(response.status_code, 200)
+        tags_created = Tag.objects.all()
+        self.assertEqual(len(tags_created), 0)
+
+    @mock.patch("kvstore.admin.views.messages")
+    def test_bulk_upload(self, mock_messages):
+        # Arrange
+        some_content_type = ContentType.objects.all()[0].id
+        some_input = "1, cool, very"
+        post_json = {
+            "object": some_content_type,
+            "allow_overwrite": True,
+            "input": some_input
+        }
         request = self.factory.post("kvstore/upload_bulk/", post_json)
         request.user = self.user
 
@@ -71,11 +106,15 @@ class AdminTestCase(TestCase):
         self.assertEqual(tag.value, "very")
 
     @mock.patch("kvstore.admin.views.messages")
-    def test_admin_bulk_upload_update_existing_key(self, mock_messages):
+    def test_bulk_upload_update_existing_key(self, mock_messages):
         # Arrange
         some_content_type = ContentType.objects.all()[0].id
         some_input = "1, cool, very"
-        post_json = {"object": some_content_type, "input": some_input}
+        post_json = {
+            "object": some_content_type,
+            "allow_overwrite": True,
+            "input": some_input
+        }
         request = self.factory.post("kvstore/upload_bulk/", post_json)
         request.user = self.user
         response = upload_bulk(request)
@@ -83,7 +122,11 @@ class AdminTestCase(TestCase):
         # Act (update value for existing key)
         updated_value = "extremely"
         some_input = "1, cool, {0}".format(updated_value)
-        post_json = {"object": some_content_type, "input": some_input}
+        post_json = {
+            "object": some_content_type,
+            "allow_overwrite": True,
+            "input": some_input
+        }
         request = self.factory.post("kvstore/upload_bulk/", post_json)
         request.user = self.user
         response = upload_bulk(request)
@@ -112,7 +155,7 @@ class AdminUploadCSVTests(TestCase):
         self.client.login(username="admin", password="12345")
 
     @mock.patch("kvstore.admin.views.messages")
-    def test_admin_csv_upload_with_header(self, mock_messages):
+    def test_csv_upload_with_header(self, mock_messages):
         # Arrange
         some_content_type = ContentType.objects.all()[0].id
         post_json = {
@@ -142,7 +185,7 @@ class AdminUploadCSVTests(TestCase):
         self.assertEqual(tag.value, "value2")
 
     @mock.patch("kvstore.admin.views.messages")
-    def test_admin_csv_upload_update_existing_key(self, mock_messages):
+    def test_csv_upload_update_existing_key(self, mock_messages):
         # Arrange
         some_content_type = ContentType.objects.all()[0].id
         post_json = {

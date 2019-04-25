@@ -23,26 +23,37 @@ class KVStoreTestCase(KVStoreBaseTestCase):
             value="very"
         )
 
-    def test_kvstore(self):
-        # Add tag
+    def test_kvstore_add_tag(self):
         self.article.kvstore.set('foo', 'bar')
+
         self.assertEqual('bar', self.article.kvstore.get('foo'))
         self.assertDictEqual({'foo': 'bar'}, self.article.kvstore.all())
 
-        # Add tags via dict
+    def test_kvstore_add_tag_as_dict(self):
         self.article.kvstore.set({'foo2': 'bar2'})
+
         self.assertTrue(self.article.kvstore.has('foo2'))
 
-        # Update existing tag
+    def test_kvstore_update_existing_tag(self):
+        self.article.kvstore.set('foo', 'bar')
+
         self.article.kvstore.set('foo', 'baz')
+
         self.assertEqual('baz', self.article.kvstore.get('foo'))
 
-        # Delete tag
+    def test_delete_tag(self):
+        self.article.kvstore.set({'foo2': 'bar2'})
+
         self.article.kvstore.delete('foo2')
+
         self.assertFalse(self.article.kvstore.has('foo2'))
 
-        # Delete all tags
+    def test_delete_all_tags(self):
+        self.article.kvstore.set('foo', 'bar')
+        self.article.kvstore.set({'foo2': 'bar2'})
+
         self.article.kvstore.delete_all()
+
         self.assertDictEqual(self.article.kvstore.all(), {})
 
     def test_tag_str(self):

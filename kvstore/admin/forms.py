@@ -7,7 +7,7 @@ from django import forms
 from django.contrib.contenttypes.models import ContentType
 
 
-class UploadForm(forms.Form):
+class UploadBulkForm(forms.Form):
 
     class CTypeChoiceField(forms.ModelChoiceField):
 
@@ -18,6 +18,10 @@ class UploadForm(forms.Form):
         queryset=ContentType.objects.order_by("app_label", "model").all()
     )
     input = forms.CharField(widget=forms.Textarea(attrs={'rows': 10}))
+    allow_overwrite = forms.BooleanField(
+        required=True,
+        label="Allow key overwrite"
+    )
 
     def clean_input(self):
         """  Return a list of tuples instead of text """
@@ -36,3 +40,16 @@ class UploadForm(forms.Form):
         values = map(return_row, values)
 
         return values
+
+
+class UploadCSVForm(forms.Form):
+
+    class CTypeChoiceField(forms.ModelChoiceField):
+
+        def label_from_instance(self, obj):
+            return "%s - %s" % (obj.app_label, obj.model)
+
+    object = CTypeChoiceField(
+        queryset=ContentType.objects.order_by("app_label", "model").all()
+    )
+    file = forms.FileField()

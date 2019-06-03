@@ -58,27 +58,6 @@ class AdminBulkUploadTests(TestCase):
         self.site = AdminSite()
 
     @mock.patch("kvstore.admin.views.messages")
-    def test_bulk_upload_does_not_allow_overwrite_fails(self, mock_messages):
-        # Arrange
-        some_content_type = ContentType.objects.all()[0].id
-        some_input = "1, cool, very"
-        post_json = {
-            "object": some_content_type,
-            "allow_overwrite": False,  # required field is unchecked
-            "input": some_input
-        }
-        request = self.factory.post("kvstore/upload_bulk/", post_json)
-        request.user = self.user
-
-        # Act
-        response = upload_bulk(request)
-
-        # Assert
-        self.assertEqual(response.status_code, 200)
-        tags_created = Tag.objects.all()
-        self.assertEqual(len(tags_created), 0)
-
-    @mock.patch("kvstore.admin.views.messages")
     def test_bulk_upload(self, mock_messages):
         # Arrange
         some_content_type = ContentType.objects.all()[0].id
@@ -104,43 +83,6 @@ class AdminBulkUploadTests(TestCase):
         self.assertEqual(tag.content_type_id, 1)
         self.assertEqual(tag.key, "cool")
         self.assertEqual(tag.value, "very")
-
-    @mock.patch("kvstore.admin.views.messages")
-    def test_bulk_upload_update_existing_key(self, mock_messages):
-        # Arrange
-        some_content_type = ContentType.objects.all()[0].id
-        some_input = "1, cool, very"
-        post_json = {
-            "object": some_content_type,
-            "allow_overwrite": True,
-            "input": some_input
-        }
-        request = self.factory.post("kvstore/upload_bulk/", post_json)
-        request.user = self.user
-        response = upload_bulk(request)
-
-        # Act (update value for existing key)
-        updated_value = "extremely"
-        some_input = "1, cool, {0}".format(updated_value)
-        post_json = {
-            "object": some_content_type,
-            "allow_overwrite": True,
-            "input": some_input
-        }
-        request = self.factory.post("kvstore/upload_bulk/", post_json)
-        request.user = self.user
-        response = upload_bulk(request)
-
-        # Assert
-        self.assertEqual(response.status_code, 200)
-
-        tags_created = Tag.objects.all()
-        self.assertEqual(len(tags_created), 1)
-
-        tag = tags_created[0]
-        self.assertEqual(tag.content_type_id, 1)
-        self.assertEqual(tag.key, "cool")
-        self.assertEqual(tag.value, updated_value)
 
 
 class AdminUploadCSVTests(TestCase):
@@ -183,32 +125,3 @@ class AdminUploadCSVTests(TestCase):
         self.assertEqual(tag.content_type_id, 1)
         self.assertEqual(tag.key, "key2")
         self.assertEqual(tag.value, "value2")
-
-    @mock.patch("kvstore.admin.views.messages")
-    def test_csv_upload_update_existing_key(self, mock_messages):
-        # Arrange
-        some_content_type = ContentType.objects.all()[0].id
-        post_json = {
-            "object": some_content_type,
-            "file": io.BytesIO(b"1, key, value\n"),
-        }
-        response = self.client.post(
-            reverse("admin:kvstore_upload_csv"), post_json, format="multipart"
-        )
-
-        # Act (update value for existing key)
-        post_json["file"] = io.BytesIO(b"1, key, updated_value\n"),
-        response = self.client.post(
-            reverse("admin:kvstore_upload_csv"), post_json, format="multipart"
-        )
-
-        # Assert
-        self.assertEqual(response.status_code, 200)
-
-        tags_created = Tag.objects.all()
-        self.assertEqual(len(tags_created), 1)
-
-        tag = tags_created[0]
-        self.assertEqual(tag.content_type_id, 1)
-        self.assertEqual(tag.key, "key")
-        self.assertEqual(tag.value, "updated_value")

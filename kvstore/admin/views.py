@@ -30,7 +30,7 @@ def upload_bulk(request):
             ctype = bulk_entry_form.cleaned_data['object']
             count = 0
             for obj_id, k, v in bulk_entry_form.cleaned_data['input']:
-                Tag.objects.update_or_create(
+                Tag.objects.get_or_create(
                     content_type=ctype,
                     object_id=obj_id,
                     key=k,
@@ -59,17 +59,19 @@ def upload_csv(request):
             ctype = upload_csv_form.cleaned_data['object']
             csv_file = upload_csv_form.cleaned_data['file']
 
-            count = 0
+            tags = []
             for line in csv_file.readlines():
-                obj_id, k, v = line.decode('utf-8').strip().split(',')
-                Tag.objects.update_or_create(
+                obj_id, k, v = line.decode("utf-8").strip().split(",")
+                new_tag = Tag(
                     content_type=ctype,
                     object_id=obj_id.strip(),
                     key=k.strip(),
-                    defaults={'value': v.strip()}
+                    value=v.strip(),
                 )
-                count += 1
-            messages.info(request, "%s tags set" % count)
+                tags.append(new_tag)
+
+            Tag.objects.bulk_create(tags)
+            messages.info(request, "%s tags set" % len(tags))
     else:
         upload_csv_form = UploadCSVForm()
 

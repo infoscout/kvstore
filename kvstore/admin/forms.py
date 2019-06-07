@@ -18,10 +18,6 @@ class UploadBulkForm(forms.Form):
         queryset=ContentType.objects.order_by("app_label", "model").all()
     )
     input = forms.CharField(widget=forms.Textarea(attrs={'rows': 10}))
-    allow_overwrite = forms.BooleanField(
-        required=True,
-        label="Allow key overwrite"
-    )
 
     def clean_input(self):
         """  Return a list of tuples instead of text """

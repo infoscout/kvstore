@@ -28,4 +28,4 @@ class Tag(models.Model):
         unique_together = (('content_type', 'object_id', 'key',),)
 
     def __str__(self):
-        return u'%s - %s - %s' % (self.content_object, self.key, self.value)
+        return u'%s - %s - %s' % (self.content_object.name, self.key, self.value)

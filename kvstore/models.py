@@ -4,12 +4,10 @@ from __future__ import unicode_literals
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 
 from kvstore.managers import TagManager
 
 
-@python_2_unicode_compatible
 class Tag(models.Model):
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
@@ -30,4 +28,4 @@ class Tag(models.Model):
         unique_together = (('content_type', 'object_id', 'key',),)
 
     def __str__(self):
-        return u'%s - %s - %s' % (self.content_object, self.key, self.value)
+        return u'%s - %s - %s' % (self.content_object.name, self.key, self.value)

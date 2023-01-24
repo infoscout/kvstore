@@ -2,7 +2,7 @@ version: 2
 jobs:
   lint-checks:
     docker:
-      - image: circleci/python:2.7
+      - image: circleci/python:3.6
     steps:
       - checkout
       - run:
@@ -49,7 +49,13 @@ jobs:
     docker:
       - image: circleci/python:3.6
     environment:
-      - DJANGO_VERSIONS: "111;20"
+      - DJANGO_VERSIONS: "111;20;30;31;32"
+  test-py39:
+    <<: *test-template
+    docker:
+      - image: circleci/python:3.9
+    environment:
+      - DJANGO_VERSIONS: "111;20;30,31,32,40"
 
 workflows:
   version: 2
@@ -61,4 +67,7 @@ workflows:
             - lint-checks
       - test-py36:
           requires:
-            - test-py27
+            - lint-checks
+      - test-py39:
+          requires:
+            - lint-checks

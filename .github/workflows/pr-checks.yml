@@ -20,6 +20,8 @@ jobs:
 
     - name: Setup a virtualenv
       run: |
+        export LC_ALL=C.UTF-8
+        export LANG=C.UTF-8
         pip install pipenv==2021.5.29
         pipenv sync
 
@@ -32,7 +34,7 @@ jobs:
         flake8 --exclude=.svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg,*.pyc,*venv/*,*/migrations/* .
 
     # - name: Lint with Pylint (custom checks)
-    #   run: PYTHONPATH=/home/circleci/project/venv/lib/python2.7/site-packages/isc_style_guide/checkers pylint .
+    #   run: PYTHONPATH=/home/circleci/project/venv/lib/python3.6/site-packages/isc_style_guide/checkers pylint .
 
   test-suite:
     runs-on: self-hosted-kvstore
@@ -43,7 +45,7 @@ jobs:
             env: DJANGO_VERSIONS="18;19;110;111"
           - version: 3.6
             env: DJANGO_VERSIONS="111;20;30;31;32"
-          - version: 2.7
+          - version: 3.9
             env: DJANGO_VERSIONS="111;20;30,31,32,40"
     needs: lint-checks
     steps:

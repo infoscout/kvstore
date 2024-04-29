@@ -9,6 +9,8 @@ jobs:
 
   lint-checks:
     runs-on: self-hosted-kvstore
+    env: 
+      GITHUB_TOKEN: ${{ secrets.GH_OAUTH_TOKEN }}
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4.1.0
@@ -26,7 +28,7 @@ jobs:
         pip install setuptools==57.5.0
 
     - name: Install linters and custom checkers
-      run:  pip install flake8 pylint sentry-stack-checker==0.4 flake8-import-order git+ssh://git@github.com/infoscout/isc-style-guide@0.2.2
+      run:  pip install flake8 pylint sentry-stack-checker==0.4 flake8-import-order git+https://${{ secrets.GH_OAUTH_TOKEN }}@github.com/infoscout/isc-style-guide@0.2.2
 
     - name: Lint with flake8
       run: |

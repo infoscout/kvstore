@@ -5,20 +5,10 @@ on:
     branches:
       - '**' # matches every branch https://stackoverflow.com/a/57903434
 
-jobs:
-  pr_checks_matrix:
-    strategy:
-      matrix:
-        python:
-          - version: 2.7
-            env: DJANGO_VERSIONS="18;19;110;111"
-          - version: 3.6
-            env: DJANGO_VERSIONS="111;20;30;31;32"
-          - version: 2.7
-            env: DJANGO_VERSIONS="111;20;30,31,32,40"
-    runs-on: self-hosted-kvstore
+jobs:    
 
   lint-checks:
+    runs-on: self-hosted-kvstore
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4.1.0
@@ -45,6 +35,16 @@ jobs:
     #   run: PYTHONPATH=/home/circleci/project/venv/lib/python2.7/site-packages/isc_style_guide/checkers pylint .
 
   test-suite:
+    runs-on: self-hosted-kvstore
+    strategy:
+      matrix:
+        python:
+          - version: 2.7
+            env: DJANGO_VERSIONS="18;19;110;111"
+          - version: 3.6
+            env: DJANGO_VERSIONS="111;20;30;31;32"
+          - version: 2.7
+            env: DJANGO_VERSIONS="111;20;30,31,32,40"
     needs: lint-checks
     steps:
     - name: Checkout Repository

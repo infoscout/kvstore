@@ -20,10 +20,10 @@ jobs:
 
     - name: Setup a virtualenv
       run: |
-        export LC_ALL=C.UTF-8
-        export LANG=C.UTF-8
-        pip install pipenv==2021.5.29
-        pipenv sync
+        pip install virtualenv
+        virtualenv venv --python python3
+        source venv/bin/activate
+        pip install setuptools==57.5.0
 
     - name: Install linters and custom checkers
       run:  pip install flake8 pylint sentry-stack-checker==0.4 flake8-import-order git+ssh://git@github.com/infoscout/isc-style-guide@0.2.2
@@ -59,8 +59,10 @@ jobs:
 
     - name: Setup a virtualenv
       run: |
-        pip install pipenv==2021.5.29
-        pipenv sync
+        pip install virtualenv
+        virtualenv venv --python python3
+        source venv/bin/activate
+        pip install setuptools==57.5.0
 
     - name: Install tox
       run: pip install tox

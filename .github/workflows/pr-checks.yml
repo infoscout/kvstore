@@ -53,7 +53,7 @@ jobs:
           - version: 3.6
             env: DJANGO_VERSIONS="111;20;30;31;32"
           - version: 3.9
-            env: DJANGO_VERSIONS="111;20;30,31,32,40"
+            env: DJANGO_VERSIONS="111;20;30;31;32;40"
     needs: lint-checks
     steps:
     - name: Checkout Repository

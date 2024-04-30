@@ -70,4 +70,4 @@ jobs:
       run: pip install tox
 
     - name: Run tests with tox
-      run: echo '${{ matrix.python.env }}' | tr ";" "\n" | xargs -L 1 -I % tox -e dj%
+      run: echo '${{ matrix.python.env }}' | tr ";" "\n" | xargs -0 -L 1 -I % tox -e dj%

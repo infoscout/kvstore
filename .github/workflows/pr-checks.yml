@@ -44,7 +44,7 @@ jobs:
         PYTHONPATH=/runner/_work/kvstore/kvstore/venv/lib/python3.6/site-packages/isc_style_guide/checkers pylint .
 
   test-suite:
-    runs-on: self-hosted-dynsettings
+    runs-on: self-hosted-kvstore
     env:
       COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     strategy:

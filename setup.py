@@ -64,6 +64,7 @@ class TestCommand(Command):
                 'django.contrib.messages.middleware.MessageMiddleware',
             ),  # Django < 1.10
             ROOT_URLCONF='kvstore.tests.urls',
+            SECRET_KEY="test_secret_key",
         )
         django.setup()
         call_command('test', 'kvstore')
